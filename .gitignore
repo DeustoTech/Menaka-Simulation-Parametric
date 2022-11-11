@@ -1,0 +1,6 @@
+
+*.DS_Store
+MenakaModel_rsim_rtw/*
+slprj/*
+src/dependences/HortiMED-Modelling-Platform-main/
+*.slxc
