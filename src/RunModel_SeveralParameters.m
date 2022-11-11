@@ -1,7 +1,10 @@
 clear
 %%
 mkdir('auxiliar_files')
+addpath('auxiliar_files')
 mkdir('simulations')
+addpath('simulations')
+
 %
 if ~exist('./MenakaModel','file')
     warning("\nNo existe Modelo compilado. Se compilara primero, para ello se lanzará 'ModelCompiler'\n\n")

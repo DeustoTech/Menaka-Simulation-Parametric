@@ -2,6 +2,7 @@ clear
 
 
 r = what('simulations/');
+addpath('simulations')
 load('simulations/ds')
 simulations = {};
 iter = 0;
