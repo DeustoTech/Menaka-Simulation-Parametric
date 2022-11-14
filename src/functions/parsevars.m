@@ -31,7 +31,7 @@ for i=[1 3 7 11]
     new_x_out.signals(i).values  = permute(sg_interp1,[2 3 1]);
 end
 
-for i=[2 4 5 6 8 9 10 13]
+for i=[2 4 5 6 8 9 10]
     sg = x_out.signals(i).values;
     sg_interp1 = interp1(tspan,sg,new_tspan);
     new_x_out.signals(i).values  = sg_interp1;
@@ -82,7 +82,7 @@ ft_st.f = ft(1,:);
 ft_st.T = ft(2,:);
 ft_st.X = ft(3:end,:);
 
-Rad_win = x_out.signals(13).values;
+%Rad_win = x_out.signals(13).values;
     
 % Calculamos el consumo electrico, termico a partir de las senales de
 % control
