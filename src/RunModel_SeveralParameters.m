@@ -65,7 +65,7 @@ clear S01_EC
 % Definimos el numero de dias que durara la simulacion
 % 
 % Tend = 360 dias -> 60 - 70 segundos de simulacion
-Tend = 60;
+Tend = 360;
 %
 %%
 % 
@@ -80,19 +80,18 @@ Tend = 60;
 %                     ventilacion
 %    - Radth_ms(:)    Radiacion cuando las pantallas de sombreo se cierran
 
-nslides = 3 ; % numero de cortes  
+nslides = 5 ; % numero de cortes  
 
 full_data = BatchGenerator(nslides);
 nsamples = size(full_data,1);
-nsamples = 5; % <= solo tomo 5.
+%nsamples = 5; % <= solo tomo 5.
 
 %%
 % Configuramos los paramteros que no se modificaran en toda el bucle de
 % paramtros 
 set_params;
 %%
-nsamples = 4
-for i = 1:nsamples
+for i = 261:nsamples
     %
     % modificamos los parametros del bucle
     %

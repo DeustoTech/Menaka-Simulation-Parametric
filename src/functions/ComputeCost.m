@@ -13,7 +13,11 @@ function consumo = ComputeCost(PowerH2COM,cc_st,DT_span,crop,ft_st,tomato)
     maxpower_on = 5000;
     maxpower = 6000;
 
+    if max(PowerH2COM) ~= 0
     consumo.electrical.heater  = maxpower*PowerH2COM/max(PowerH2COM) +maxpower_on*dHdt;
+    else
+    consumo.electrical.heater = 0*dHdt;
+    end
     %%
 
     load_curve = (1/(24*3600))*abs(gradient(cc_st.Windows.value,rt_tout));

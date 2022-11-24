@@ -179,5 +179,91 @@ for j = 1:3
 end
 
 %%
-% text = printstruct(simulations{1},'printcontents', 1);
-% writecell(text,'Parametros')
+% outputs = {tomtato,thermal,electrical,nutrients,water_c};
+out_mat = [];
+out_mat.tomate      = outputs{1}';
+out_mat.thermal     = outputs{2}';
+out_mat.electrical  = outputs{3}';
+out_mat.nutrients   = outputs{4}';
+out_mat.water_c     = outputs{5}';
+% 
+
+alpha_th = 1e-2;
+alpha_el = 1e-2;
+alpha_to = 1e2;
+alpha_wa = 1e-5;
+alpha_nu = 1e-5;
+
+out_mat.Fcost =   alpha_to*out_mat.tomate      ...
+                - alpha_th*out_mat.thermal     ...
+                - alpha_nu*out_mat.nutrients     ...
+                - alpha_wa*out_mat.water_c     ...
+                - alpha_el*out_mat.electrical;
+
+out_mat = struct2table(out_mat);
+
+%%
+fig = figure;
+fig.Color = 'w';
+
+n_sims_plot = length(tomtato);
+
+bar([1:n_sims_plot],sort(out_mat.Fcost(1:n_sims_plot))/1e3)
+ylabel('B(k€)')
+title('Benefit predicted of all simulations')
+
+xlabel('simulations')
+grid on
+%%
+fig = figure(1);
+fig.Color = 'w';
+fig.Renderer = 'painters';
+clf 
+hold on
+isc = scatter3(out_mat.thermal/1e3,out_mat.electrical/1e3,1+out_mat.tomate,100,out_mat.tomate,'filled');
+isc.MarkerEdgeColor = 'k';
+
+
+th_max = 1000;
+th_max = 400;
+th_max = 63;
+
+th_ls = linspace(40,th_max,500);
+el_max = 28;
+el_max = 20;
+el_max = 15.2;
+
+el_ls = linspace(12,el_max,500);
+
+[th_ms,el_ms] = ndgrid(th_ls,el_ls);
+
+F = scatteredInterpolant(out_mat.thermal/1e3,out_mat.electrical/1e3,out_mat.tomate,'linear');
+F.ExtrapolationMethod = 'linear';
+
+is = surf(th_ms,el_ms,F(th_ms,el_ms));
+is.FaceAlpha = 0.75;
+shading interp
+colormap(jet(25))
+ic = colorbar;
+ic.Label.String = 'Tomato (Tons)';
+%caxis([49 59])
+caxis([49 57])
+
+grid on
+box on
+xlabel('Thermal Cost (MWh)')
+ylabel('Electrical Cost (MWh)')
+zlabel('Tomato (Tons)')
+
+%xlim([50 65])
+%ylim([13.5 15.5])
+
+xlim([50 th_max])
+ylim([13.5 el_max])
+%zlim([49 58])
+view(120,45)
+view(-0,90)
+
+legend([isc is],'simulations','interpolation','location','best')
+
+%%
