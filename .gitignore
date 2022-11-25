@@ -9,3 +9,4 @@ auxiliar_files/Menaka_parameters_simulink_Structure.mat
 auxiliar_files/external_climate_rsim.mat
 MenakaModel
 simulations/*
+*.asv

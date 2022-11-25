@@ -29,7 +29,7 @@ Tend = 4;
 %%
 
 t0_span = ds.DateTime(1):days(Tend):ds.DateTime(end);
-t0_span = t0_span(1:3);
+%t0_span = t0_span(1:3);
 BuildBusFlow;
 
 best_benefit_span = [];
@@ -41,6 +41,8 @@ for j = 1:length(t0_span)
     % estrutura determinada por matlab.
     EC = set_external_climate(ds,t0);
     % >> open SlowLayerControlMenaka
+    % Recibe el clima exterior EC
+    % Devuelve Best Simulation 
     SlowLayerControlMenaka;
 
     %best_simulation

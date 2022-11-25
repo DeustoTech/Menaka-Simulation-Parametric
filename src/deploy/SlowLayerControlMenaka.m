@@ -76,11 +76,11 @@ for i = 1:nsamples
 end
 %% Calculamos la funcion de coste
 % 
-alpha_th = 1e-2; % [ kW{thermal}/€    ]
-alpha_el = 1e-3; % [ kW{electrical}/€ ] 
-alpha_to = 1e+3; % [ tomate{kg}/€     ]
-alpha_wa = 1e-6; % [ water{kg}/€      ]
-alpha_nu = 1e-6; % [ nutrients{kg}/€  ]
+alpha_th = 1e-2; % [ €/kW{thermal}    ]
+alpha_el = 1e-3; % [ €/kW{electrical} ] 
+alpha_to = 1e+3; % [ €/tomate{kg}     ]
+alpha_wa = 1e-6; % [ €/water{kg}      ]
+alpha_nu = 1e-6; % [ €/nutrients{kg}  ]
 %
 %%
 A_v = parameters.crop.A_v; % metros cuadrados de plantacion
@@ -90,7 +90,7 @@ benefit = zeros(1,nsamples);
 for iter = 1:nsamples
     cost = simulation_out{iter}.total;
 
-    benefit(iter) = cost.carbon*alpha_to*A_v     - ...
+    benefit(iter) = cost.carbon*alpha_to*A_v - ...
                     cost.thermal*alpha_th    - ...
                     cost.electrical*alpha_el - ...
                     cost.water_c*alpha_wa    - ...
@@ -99,5 +99,5 @@ for iter = 1:nsamples
 end
 %%
 [best_benefit,ind] = max(benefit);
-best_simulation = simulation_out{i};
+best_simulation = simulation_out{ind};
 %%

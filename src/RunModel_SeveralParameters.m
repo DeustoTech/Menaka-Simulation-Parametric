@@ -1,11 +1,14 @@
 clear
-%%
+%% Crear carpetas 
+% Se ejecute en la carpeta principal
+
 mkdir('auxiliar_files')
 addpath('auxiliar_files')
 mkdir('simulations')
 addpath('simulations')
 
-%
+% Comprobando si el modelo esta compilado 
+
 if ~exist('./MenakaModel','file')
     warning("\nNo existe Modelo compilado. Se compilara primero, para ello se lanzará 'ModelCompiler'\n\n")
     ModelCompiler;
@@ -55,7 +58,7 @@ ds = ds.ds;
 t0 = ds.DateTime(1);
 
 % Comvertimos los datos de clima de la tabla ds en un formato tipo
-% estrutura determinada por matlab.
+% estrutura determinada por matlab simulink .
 S01_EC = set_external_climate(ds,t0);
 % guardamos en fichero 
 save('auxiliar_files/external_climate_rsim.mat','S01_EC')
@@ -91,7 +94,7 @@ nsamples = size(full_data,1);
 % paramtros 
 set_params;
 %%
-for i = 261:nsamples
+for i = 1:nsamples
     %
     % modificamos los parametros del bucle
     %
@@ -152,4 +155,3 @@ end
 % Guardamos el clima exterior con el que se genero la simulacion
 save("simulations/ds",'ds')
 %%
-
