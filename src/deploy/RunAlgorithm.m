@@ -34,9 +34,20 @@ BuildBusFlow;
 
 best_benefit_span = [];
 %
+load_system('MenakaModel')
+isim = Simulink.SimulationInput('MenakaModel');
+set_param('MenakaModel','StopTime',num2str(Tend));
+set_param('MenakaModel','SimulationMode','accelerator');
+
 for j = 1:length(t0_span) 
     
     t0 = t0_span(j);
+    %
+
+    fprintf([repmat('=',1,70),'\n\n'])
+    fprintf("Calculo de mejores setpoints el: "+string(t0)+"\n")
+    fprintf([repmat('=',1,70),'\n\n'])
+    
     % Comvertimos los datos de clima de la tabla ds en un formato tipo
     % estrutura determinada por matlab.
     EC = set_external_climate(ds,t0);
@@ -48,9 +59,6 @@ for j = 1:length(t0_span)
     %best_simulation
     best_benefit_span(j).sim  = best_simulation;
     best_benefit_span(j).benefit = best_benefit;
-    
-    fprintf('=====================================================\n')
-    fprintf('=====================================================\n')
 
 end
 

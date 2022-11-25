@@ -1,11 +1,6 @@
 
 % guardamos en fichero 
-isim = Simulink.SimulationInput('MenakaModel');
 isim = setExternalInput(isim,EC);
-
-set_param('MenakaModel','StopTime',num2str(Tend));
-set_param('MenakaModel','SimulationMode','rapid');
-
 %
 %%
 % 
