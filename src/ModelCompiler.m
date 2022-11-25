@@ -3,7 +3,7 @@
 % Este script compila el modelo de simulink "MenakaModel", con el fin de
 % poder ejecutarse en un batch de simulaciones. 
 %
-clear 
+ 
 %%
 % El modelo de substrate bag tiene variables tipo Bus NoVirtual. Esto significa que existe una estructura de datos estatica que simulink debe conocer. 
 % La función BuildBusFlow, crea este tipo de variable FLOW (Type Bus). Si
