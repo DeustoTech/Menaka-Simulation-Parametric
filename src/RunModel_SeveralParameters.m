@@ -7,9 +7,14 @@ addpath('auxiliar_files')
 mkdir('simulations')
 addpath('simulations')
 
+if ispc 
+    modelname = 'MenakaModel.exe';
+else
+    modelname = './MenakaModel';
+end
 % Comprobando si el modelo esta compilado 
 
-if ~exist('./MenakaModel','file')
+if ~exist(modelname,'file')
     warning("\nNo existe Modelo compilado. Se compilara primero, para ello se lanzará 'ModelCompiler'\n\n")
     ModelCompiler;
 end
@@ -68,7 +73,7 @@ clear S01_EC
 % Definimos el numero de dias que durara la simulacion
 % 
 % Tend = 360 dias -> 60 - 70 segundos de simulacion
-Tend = 360;
+Tend = 30;
 %
 %%
 % 
@@ -126,7 +131,7 @@ for i = 1:nsamples
     %
     try
         % Ejecutamos el modelo compilado
-        system("./MenakaModel"                                                  + ... % modelo compilado        
+        system(modelname                                                  + ... % modelo compilado        
                 " -i auxiliar_files/external_climate_rsim.mat"                  + ... % External Climate en el formato requerido para el modelo compilado
                 " -p auxiliar_files/Menaka_parameters_simulink_Structure.mat"   + ... % Parametros 
                 " -o auxiliar_files/output_variables_MenakaModel.mat"           + ... % Nombre del fichero de salida
