@@ -14,10 +14,11 @@ else
 end
 % Comprobando si el modelo esta compilado 
 
-if ~exist(modelname,'file')
+if ~exist(modelname,'file') ||ispc
     warning("\nNo existe Modelo compilado. Se compilara primero, para ello se lanzará 'ModelCompiler'\n\n")
     ModelCompiler;
 end
+
 %% 
 % Cargamos los datos de clima exterior
 %
