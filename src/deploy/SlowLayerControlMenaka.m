@@ -16,10 +16,11 @@ isim = setExternalInput(isim,EC);
 %    - Radth_ms(:)    Radiacion cuando las pantallas de sombreo se cierran
 
 nslides = 5 ; % numero de cortes  
-
 full_data = BatchGenerator(nslides);
-nsamples = size(full_data,1);
-%nsamples = 5; % <= solo tomo 5.
+
+nsamples = 10;
+ind_rand = randperm(size(full_data,1),nsamples);
+full_data = full_data(ind_rand,:);
 
 %%
 % Configuramos los paramteros que no se modificaran en toda el bucle de
@@ -27,12 +28,11 @@ nsamples = size(full_data,1);
 set_params;
 simulation_out = {};
 %%
-nsamples = 5;
 for i = 1:nsamples
     %
     % modificamos los parametros del bucle
     %
-    fprintf(i+" - iter\n\n")
+    fprintf(i+" - iter\n")
     %
     % Modificamos las variables de interes en la estructura de parametros 
     parameters.Tmax          = full_data(i,1);      % Temperatura de apagado del heater cuando esta encendido
@@ -64,10 +64,7 @@ for i = 1:nsamples
     %
     simulation_out{i} = parsevars_days(r,ds,parameters.crop,full_data(i,:),t0);
     %
-    % Guardamos la salida de esta simulacion, ya parseada en la carpera
-    % simulations
-    %
-    %save("simulations/sim_"+num2str(i,'%04d'),'simulation_out')
+    fprintf([repmat('=',1,10),'\n\n'])
 end
 %% Calculamos la funcion de coste
 % 
@@ -78,19 +75,23 @@ alpha_wa = 1e-6; % [ €/water{kg}      ]
 alpha_nu = 1e-6; % [ €/nutrients{kg}  ]
 %
 %%
+% Calculamos el beneficio para cada uno de las simulaciones realizadas 
 A_v = parameters.crop.A_v; % metros cuadrados de plantacion
 
 benefit = zeros(1,nsamples);
 %
 for iter = 1:nsamples
-    cost = simulation_out{iter}.total;
-
-    benefit(iter) = cost.carbon*alpha_to*A_v - ...
-                    cost.thermal*alpha_th    - ...
-                    cost.electrical*alpha_el - ...
-                    cost.water_c*alpha_wa    - ...
-                    cost.nutrients*alpha_nu;
-          
+    try 
+        cost = simulation_out{iter}.total;
+    
+        benefit(iter) = cost.carbon*alpha_to*A_v - ...
+                        cost.thermal*alpha_th    - ...
+                        cost.electrical*alpha_el - ...
+                        cost.water_c*alpha_wa    - ...
+                        cost.nutrients*alpha_nu;
+    catch 
+         benefit(iter) = -inf;
+    end
 end
 %%
 [best_benefit,ind] = max(benefit);

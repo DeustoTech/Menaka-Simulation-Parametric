@@ -23,11 +23,12 @@ function full_data = BatchGenerator(nsamples)
 % 
 
 Tk = 273.15;
-Tmax_h_ls = linspace(6,20,nsamples) + Tk;
-Tmin_h_ls = linspace(6,20,nsamples) + Tk;
-Tmax_w_ls = linspace(6,20,nsamples) + Tk;
-Tmin_w_ls = linspace(6,20,nsamples) + Tk;
-Radth_ls  = linspace(300,1000,nsamples); % [W/m^2] 
+% Estos parametros se podrían cambiar intentando afinar mas
+Tmax_h_ls = linspace(10,15,nsamples) + Tk;
+Tmin_h_ls = linspace(10,15,nsamples) + Tk;
+Tmax_w_ls = linspace(18,22,nsamples) + Tk;
+Tmin_w_ls = linspace(18,22,nsamples) + Tk;
+Radth_ls  = linspace(600,1000,nsamples); % [W/m^2] 
 
 [Tmax_h_ms,Tmin_h_ms,Tmax_w_ms,Tmin_w_ms,Radth_ms] = ndgrid(Tmax_h_ls,Tmin_h_ls,Tmax_w_ls,Tmin_w_ls,Radth_ls);
 
